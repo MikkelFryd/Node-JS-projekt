@@ -1,18 +1,20 @@
-import express from 'express'
-import dotenv from 'dotenv'
+import express from 'express';
+import dotenv from 'dotenv';
+import { router as SongRouter } from './Routes/song.router.js';
 
-import {router as SongRouter} from './Routes/song.router.js'
-import {router as ArtistRouter} from './Routes/artist.router.js'
+// Kalder environment vars
+dotenv.config();
 
-dotenv.config()
+const port = process.env.PORT || 3030;
 
-const port = process.env.PORT || 3030
+const app = new express();
+app.use(express.urlencoded({
+	extended: true
+  }));
+app.use(express.json())
 
-const app = new express()
-
-app.use(SongRouter)
-app.use(ArtistRouter)
+app.use(SongRouter);
 
 app.listen(port, () => {
-    console.log(`server kører på ${port}`)
+	console.log(`Server kører på port http://localhost:${port}`);
 })
